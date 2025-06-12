@@ -1,14 +1,16 @@
 import os
 
 
-def get_files_info(working_directory, directory=None):
+def get_files_info(working_directory, directory="."):
     working_directory_path = os.path.abspath(working_directory)
     if directory:
         directory_path = os.path.abspath(os.path.join(working_directory, directory))
-    if not directory_path.startswith(working_directory_path):
-        return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
+    else:
+        return "Error: No Directory Provided"
     if not os.path.isdir(directory_path):
         return f'Error: "{directory}" is not a directory'
+    if not directory_path.startswith(working_directory_path):
+        return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
     try:
         files_info = []
         for filename in os.listdir(directory_path):
